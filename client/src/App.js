@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from 'axios';
+import { BrowserRouter as Router, Route,Routes, Link } from 'react-router-dom';
 import StudentList from './StudentList';
-
+import StudentFormPage from './StudentFormPage'; // Import StudentFormPage component
+import ParentComponent from './ParentComponent';
+// import RemoveStudentPage from './RemoveStudentPage'; 
+const URL = process.env.REACT_APP_SERVER_URL;
 function App() {
   const [name, setName] = useState('');
   const [rollnumber, setRollnumber] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [studentList, setStudentList] = useState([]);
   const [attendanceData, setAttendanceData] = useState({});
 
   useEffect(() => {
-    Axios.get('http://localhost:3031/read')
+    Axios.get(`${URL}/read`)
       .then((response) => {
         setStudentList(response.data);
       })
@@ -20,7 +26,7 @@ function App() {
   }, []);
 
   const addToList = () => {
-    Axios.post('http://localhost:3031/insert', { name: name, rollnumber: rollnumber })
+    Axios.post(`${URL}/insert`, { name: name, rollnumber: rollnumber })
       .then((response) => {
         console.log('Student added successfully');
         // Update the student list with the new student
@@ -41,61 +47,48 @@ function App() {
     }));
   };
 
-  const handleUpdateAttendance = () => {
-    const attendanceArray = Object.entries(attendanceData).map(([studentId, attendance]) => ({
-      studentId,
-      attendance,
-    }));
+  // const handleUpdateAttendance = () => {
+  //   const attendanceArray = Object.entries(attendanceData).map(([studentId, attendance]) => ({
+  //     studentId,
+  //     attendance,
+  //   }));
 
-    Axios.post('http://localhost:3031/attendance', { attendanceData: attendanceArray })
-      .then(() => {
-        console.log('Attendance recorded successfully');
-      })
-      .catch((error) => {
-        console.error('Error recording attendance:', error);
-      });
-  };
+  //   Axios.post(`${URL}/attendance`, { attendanceData: attendanceArray })
+  //     .then(() => {
+  //       console.log('Attendance recorded successfully');
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error recording attendance:', error);
+  //     });
+  // };
+  
 
-  const handleDownloadAttendance = () => {
-    Axios.get('http://localhost:3031/download', { responseType: 'blob' })
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'attendance.csv');
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      })
-      .catch((error) => {
-        console.error('Error downloading attendance data:', error);
-      });
-  };
+
+
 
   return (
-    <div className="App">
-      <h1> BASIC ATTENDANCE MANAGEMENT APPLICATION</h1>
-      <div className="StudentForm">
-        <label>Name :</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <label>Roll Number :</label>
-        <input type="number" value={rollnumber} onChange={(e) => setRollnumber(e.target.value)} />
-        <button onClick={addToList}>Add to List</button>
-      </div>
+
+      <div className="App">
+        <nav className="MenuBar">
+          {/* Menu bar with links to StudentFormPage and RemoveStudentPage */}
+          <Link to="/form">ADD VOLUNTEER</Link>
+        <Link to="/remove">REMOVE VOLUNTEER</Link>
+        <Link to="/data">DOWNLOAD ATTENDANCE</Link>
+        </nav>
+
       <StudentList
-        studentList={studentList}
-        attendanceData={attendanceData}
-        handleAttendanceChange={handleAttendanceChange}
-      />
+          studentList={studentList}
+          attendanceData={attendanceData}
+          handleAttendanceChange={handleAttendanceChange}
+        />
+      {/* <ParentComponent studentlist={studentList} /> */}
       <div className="ButtonContainer">
-        <button className="UpdateButton" onClick={handleUpdateAttendance}>
+        {/* <button className="UpdateButton" onClick={handleUpdateAttendance}>
           Update
-        </button>
-        <button className="DownloadButton" onClick={handleDownloadAttendance}>
-          Download Attendance
-        </button>
+        </button> */}
+        
       </div>
-    </div>
+      </div>
   );
 }
 
