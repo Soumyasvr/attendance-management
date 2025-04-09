@@ -103,7 +103,7 @@ const StudentRemovalForm = () => {
                   
         </div>
           )}
-          {deleteMessage && <p>{deleteMessage}</p>}
+          {deleteMessage && <p className='extra-styling'>{deleteMessage}</p>}
     </div>
   );
 };

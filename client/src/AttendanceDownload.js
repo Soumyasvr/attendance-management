@@ -32,9 +32,9 @@ function AttendanceDownload() {
             <h1>Download Attendance</h1>
             <form>
             <label>Start Date:</label>
-            <input type="text" value={startDate} onChange={(e) => setStartDate(e.target.value)} placeholder="start date" />
+            <input type="text" value={startDate} onChange={(e) => setStartDate(e.target.value)} placeholder="start date (yyyy-mm-dd)" />
             <label>End Date:</label>
-        <input type="text" value={endDate} onChange={(e) => setEndDate(e.target.value)} placeholder="end date" />
+        <input type="text" value={endDate} onChange={(e) => setEndDate(e.target.value)} placeholder="end date (yyyy-mm-dd)" />
         <button className="DownloadButton" onClick={handleDownloadAttendance}>
           Download Attendance
           </button>

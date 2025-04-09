@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import './StudentForm.css';
+
 const URL = process.env.REACT_APP_SERVER_URL;
+//const URL = "http://localhost:3031"
+console.log("Backend URL:", URL); // ✅ Check if URL is loaded correctly
 
 const StudentFormPage = () => {
-    const [insertStudent, setInsertStudent] = useState('');
+  const [insertStudent, setInsertStudent] = useState('');
   const [formData, setFormData] = useState({
     Name: '',
     Register_number: '',
@@ -30,33 +33,37 @@ const StudentFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted!"); // ✅ Confirm submit triggers
 
     try {
       const response = await Axios.post(`${URL}/form/insert`, formData);
-        console.log('Student added successfully:', response.data);
+      console.log('Backend Response:', response); // ✅ Log full response
+
+      if (response.status === 200) {
         setInsertStudent("Student added successfully");
 
-      // Update the student list with the new student
+        // ✅ Clear form only after successful insert
+        setFormData({
+          Name: '',
+          Register_number: '',
+          Year_of_studying: '',
+          Branch_of_studying: '',
+          Date_of_Birth: '',
+          Gender: '',
+          Community: '',
+          Minority_Community: '',
+          Blood_Group: '',
+          Aadhar_number: '',
+          Mobile_number: '',
+          Email_id: '',
+        });
+      } else {
+        setInsertStudent("Failed to add student. Try again.");
+      }
 
-      // Clear the form data
-      setFormData({
-        Name: '',
-        Register_number: '',
-        Year_of_studying: '',
-        Branch_of_studying: '',
-        Date_of_Birth: '',
-        Gender: '',
-        Community: '',
-        Minority_Community: '',
-        Blood_Group: '',
-        Aadhar_number: '',
-        Mobile_number: '',
-        Email_id: '',
-      });
-
-      // Clear search results if any
     } catch (error) {
       console.error('Error adding student:', error);
+      setInsertStudent("Server error. Please try again later.");
     }
   };
 
@@ -64,7 +71,6 @@ const StudentFormPage = () => {
     <div>
       <h2>Student Form</h2>
       <form onSubmit={handleSubmit}>
-        {/* Render your form inputs based on the schema */}
         <label>Name:</label>
         <input type="text" name="Name" value={formData.Name} onChange={handleChange} required />
 
@@ -82,7 +88,8 @@ const StudentFormPage = () => {
 
         <label>Gender:</label>
         <input type="text" name="Gender" value={formData.Gender} onChange={handleChange} />
-{/* 
+
+        {/* 
         <label>Community:</label>
         <input type="text" name="Community" value={formData.Community} onChange={handleChange} />
 
@@ -99,10 +106,11 @@ const StudentFormPage = () => {
         <input type="text" name="Mobile_number" value={formData.Mobile_number} onChange={handleChange} />
 
         <label>Email ID:</label>
-        <input type="text" name="Email_id" value={formData.Email_id} onChange={handleChange} /> */}
+        <input type="text" name="Email_id" value={formData.Email_id} onChange={handleChange} /> 
+        */}
 
-              <button type="submit">Add Student</button>
-              {insertStudent && <p>{insertStudent}</p>} 
+        <button type="submit">Add Student</button>
+        {insertStudent && <p>{insertStudent}</p>}
       </form>
     </div>
   );

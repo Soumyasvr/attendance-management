@@ -10,12 +10,35 @@ const path = require('path');
 const app = express();
 const StudentModel = require('./models/Student1');
 const AttendanceModel = require('./models/Attendance2');
+
+app.use(cors());
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:3000","https://attendancemonitoringsyst-b1ae8.web.app", "https://mern-attendance-app.onrender.com"] }));
-// mongodb+srv://gurucharan:Premguru125@cluster.t9bqdyu.mongodb.net/food?retryWrites=true&w=majority
-mongoose.connect('mongodb+srv://NSSUser1:NSSUser123@nss.vncxd.mongodb.net/volunteer?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
+// app.use(cors({ origin: ["http://localhost:3000","https://attendancemonitoringsyst-b1ae8.web.app", "https://mern-attendance-app.onrender.com"] }));
+// // mongodb+srv://gurucharan:Premguru125@cluster.t9bqdyu.mongodb.net/food?retryWrites=true&w=majority
+// mongoose.connect('mongodb+srv://NSSUser1:NSSUser123@nss.vncxd.mongodb.net/volunteer?retryWrites=true&w=majority', {
+//     useNewUrlParser: true,
+// });
+
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://attendancemonitoringsyst-b1ae8.web.app",
+    "https://mern-attendance-app.onrender.com"
+  ]
+}));
+
+
+app.use(express.json());
+
+mongoose.connect('mongodb://localhost:27017/volunteer', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("✅ Connected to MongoDB locally");
+}).catch(err => {
+  console.error("❌ Error connecting to MongoDB:", err);
 });
+
 
 app.post('/form/insert', async (req, res) => {
     const {
@@ -56,6 +79,12 @@ app.post('/form/insert', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+app.get('/students', async (req, res) => {
+  const students = await StudentModel.find();
+  res.json(students);
+});
+
 app.get('/remove/getStudent/:registerNumber', async (req, res) => {
   const registerNumber = req.params.registerNumber;
 
@@ -414,6 +443,7 @@ app.get('/read', async (req, res) => {
 //     res.status(500).send('Internal Server Error');
 //   }
 // });
+
 app.get('/attendanceToday/:date', async (req, res) => {
   try {
     const dateParam = req.params.date;

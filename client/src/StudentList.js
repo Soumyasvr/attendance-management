@@ -157,10 +157,10 @@ function StudentList({ studentList, attendanceData, handleAttendanceChange }) {
         Update
       </button>
 
-      {updateMessage && <p className="update-message">{updateMessage}</p>} {/* Display the message */}
+      {updateMessage && <p className="update-message extra-styling">{updateMessage}</p>} {/* Display the message */}
 
       <label>Enter the Date for downloading the specific date's attendance</label>
-      <input type="text" value={downloadDate} onChange={handleInputChange} />
+      <input type="text" value={downloadDate} onChange={handleInputChange} placeholder='enter date (yyyy-mm-dd)'/>
       <button className="downloadTodayAttendance" onClick={handleDownloadToday}>Download</button>
     </div>
   );

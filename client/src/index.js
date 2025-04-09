@@ -5,6 +5,8 @@ import { BrowserRouter , Route,Routes, Link } from 'react-router-dom';
 import StudentFormPage from './StudentFormPage';
 import StudentRemovalForm from './StudentRemovePage';
 import AttendanceDownload from './AttendanceDownload';
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +16,8 @@ root.render(
     <BrowserRouter>
       <Routes>
       <Route exact path="/" element={<App />}></Route>
+      <Route exact path="/login" element={<LoginPage />}></Route>
+      <Route exact path="/register" element={<RegisterPage />}></Route>
         <Route exact path="/form" element={<StudentFormPage />}></Route>
         <Route exact path="/remove" element={<StudentRemovalForm />}></Route>
         <Route exact path="/data" element={<AttendanceDownload />}></Route>
