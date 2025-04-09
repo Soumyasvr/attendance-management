@@ -19,13 +19,13 @@ app.use(express.json());
 //     useNewUrlParser: true,
 // });
 
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://attendancemonitoringsyst-b1ae8.web.app",
-    "https://mern-attendance-app.onrender.com"
-  ]
-}));
+// app.use(cors({
+//   origin: [
+//     "http://localhost:3000",
+//     "https://attendancemonitoringsyst-b1ae8.web.app",
+//     "https://mern-attendance-app.onrender.com"
+//   ]
+// }));
 
 
 app.use(express.json());
