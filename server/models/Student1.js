@@ -8,6 +8,7 @@ const StudentSchema = new mongoose.Schema({
     Register_number: {
         type: String,
         required: true,
+        unique: true,
     },
     Year_of_studying: {
         type: String,

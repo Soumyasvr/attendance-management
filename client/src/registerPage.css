@@ -14,3 +14,15 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
 }
+.registered{
+    color: #007bff;
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+}
+.register-success{
+    color: green;
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+}

@@ -10,6 +10,7 @@ const path = require('path');
 const app = express();
 const StudentModel = require('./models/Student1');
 const AttendanceModel = require('./models/Attendance2');
+const FormDataModel = require('./models/FormData');
 
 app.use(cors());
 app.use(express.json());
@@ -39,6 +40,44 @@ mongoose.connect('mongodb://localhost:27017/volunteer', {
   console.error("❌ Error connecting to MongoDB:", err);
 });
 
+
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+
+  FormDataModel.findOne({ username: username })
+    .then(user => {
+      if (user) {
+        res.json("Already registered");
+      } else {
+        FormDataModel.create({ username, password })
+          .then(() => res.json("Registered successfully"))
+          .catch(err => res.status(500).json("Error while saving data: " + err));
+      }
+    })
+    .catch(err => res.status(500).json("Error finding user: " + err));
+});
+
+
+app.post('/login', (req, res)=>{
+  // To find record from the database
+  const {username, password} = req.body;
+  FormDataModel.findOne({username: username})
+  .then(user => {
+      if(user){
+          // If user found then these 2 cases
+          if(user.password === password) {
+              res.json("Success");
+          }
+          else{
+              res.json("Wrong password");
+          }
+      }
+      // If user not found then 
+      else{
+          res.json("No records found! ");
+      }
+  })
+})
 
 app.post('/form/insert', async (req, res) => {
     const {
