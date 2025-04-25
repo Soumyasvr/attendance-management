@@ -46,7 +46,6 @@ const LoginPage = () => {
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password" required onChange={(event) => setPassword(event.target.value)}/>
 
-                <p>Forgot your password? <a href="/forgot-password">Reset it here</a></p>
                 
                 <button type="submit" className='login-button'>Login</button>
                 <p>Don't have an account? <a href="/register">Register here</a></p>

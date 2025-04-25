@@ -14,10 +14,13 @@ function App() {
   const [endDate, setEndDate] = useState('');
   const [studentList, setStudentList] = useState([]);
   const [attendanceData, setAttendanceData] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(() => {
     Axios.get(`${URL}/read`)
       .then((response) => {
+        setIsLoggedIn(true);
         setStudentList(response.data);
       })
       .catch((error) => {
@@ -75,11 +78,21 @@ function App() {
         <Link to="/remove">REMOVE VOLUNTEER</Link>
         <Link to="/data">DOWNLOAD ATTENDANCE</Link>
         </nav>
+        <div>
+          <button className="LogoutButton" onClick={() => {
+            setIsLoggedIn(false);
+            window.location.href = '/login'; // Redirect to login page
+          }
+          }>
+            Logout
+            </button>
+        </div>
 
       <StudentList
           studentList={studentList}
           attendanceData={attendanceData}
           handleAttendanceChange={handleAttendanceChange}
+          isLoggedIn={isLoggedIn}
         />
       {/* <ParentComponent studentlist={studentList} /> */}
       <div className="ButtonContainer">

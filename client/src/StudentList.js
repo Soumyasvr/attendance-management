@@ -5,7 +5,7 @@ import SearchComponent from './SearchComponent';
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
-function StudentList({ studentList, attendanceData, handleAttendanceChange }) {
+function StudentList({ studentList, attendanceData, handleAttendanceChange, isLoggedIn}) {
   const [searchResults, setSearchResults] = useState([]);
   const [defaultAttendanceData, setDefaultAttendanceData] = useState({});
   const [updateMessage, setUpdateMessage] = useState('');
@@ -100,6 +100,11 @@ function StudentList({ studentList, attendanceData, handleAttendanceChange }) {
   };
 
   return (
+    !isLoggedIn ? (
+      <div className="StudentList">
+        <p className="not-logged-in-message"> Please log in to view the student list and manage attendance.</p>
+      </div>
+    ) :
     <div className="StudentList">
       <label>Search by student name:</label>
       <SearchComponent

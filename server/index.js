@@ -31,7 +31,7 @@ app.use(express.json());
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/volunteer', {
+mongoose.connect('mongodb+srv://soumya:soumyaj@cluster0.d2a4rb0.mongodb.net/volunteer', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
