@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -11,8 +12,8 @@ const app = express();
 const StudentModel = require('./models/Student1');
 const AttendanceModel = require('./models/Attendance2');
 const FormDataModel = require('./models/FormData');
-import dotenv from "dotenv";
-dotenv.config();
+
+
 
 const mongoURL = process.env.MONGO_URL;
 
@@ -642,16 +643,16 @@ function isValidDateFormat(date) {
 }
 
 // Function to check if the date is in the format YYYY-MM-DD
-function isValidDateFormat(date) {
-  const regex = /^\d{4}-\d{2}-\d{2}$/;
-  return regex.test(date);
-}
+// function isValidDateFormat(date) {
+//   const regex = /^\d{4}-\d{2}-\d{2}$/;
+//   return regex.test(date);
+// }
 
 // Function to check if the date is in the format YYYY-MM-DD
-function isValidDateFormat(date) {
-  const regex = /^\d{4}-\d{2}-\d{2}$/;
-  return regex.test(date);
-}
+// function isValidDateFormat(date) {
+//   const regex = /^\d{4}-\d{2}-\d{2}$/;
+//   return regex.test(date);
+// }
 
 
 
