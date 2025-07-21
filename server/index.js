@@ -11,6 +11,11 @@ const app = express();
 const StudentModel = require('./models/Student1');
 const AttendanceModel = require('./models/Attendance2');
 const FormDataModel = require('./models/FormData');
+import dotenv from "dotenv";
+dotenv.config();
+
+const mongoURL = process.env.MONGO_URL;
+
 
 app.use(cors());
 app.use(express.json());
@@ -27,11 +32,12 @@ app.use(express.json());
 //     "https://mern-attendance-app.onrender.com"
 //   ]
 // }));
+// mongodb+srv://soumya:soumyaj@cluster0.d2a4rb0.mongodb.net/volunteer
 
 
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://soumya:soumyaj@cluster0.d2a4rb0.mongodb.net/volunteer', {
+mongoose.connect(mongoURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
